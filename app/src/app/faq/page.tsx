@@ -1,26 +1,62 @@
 import type { Metadata } from "next";
-import { BookOnVallyButton } from "@/components/BookOnVallyButton";
+import Link from "next/link";
 import { FAQAccordion } from "@/components/FAQAccordion";
+import { BookNowButton } from "@/components/BookNowButton";
 import { faqs } from "@/content/faqs";
 
 export const metadata: Metadata = {
-  title: "FAQ | Castcadia Guided Fishing",
-  description: "Answers about booking, weather, preparation, and charter policies.",
+  title: "FAQ",
+  description:
+    "Answers about booking, weather, preparation, cancellation policies, and what to expect on your guided fishing trip with Castcadia Outfitters.",
 };
 
 export default function FAQPage() {
+  const categories = [
+    { key: "booking", label: "Booking" },
+    { key: "preparation", label: "Preparation" },
+    { key: "logistics", label: "Logistics" },
+    { key: "policy", label: "Policies" },
+    { key: "safety", label: "Safety" },
+  ] as const;
+
   return (
-    <section className="section-wrap pt-12 md:pt-16">
-      <h1 className="text-4xl md:text-5xl">Frequently Asked Questions</h1>
-      <p className="mt-4 max-w-3xl text-[#c7d7d3]">
-        Quick answers to remove booking friction: what to bring, weather plans, and how booking on vally works.
-      </p>
-      <div className="mt-8">
-        <FAQAccordion items={faqs} />
-      </div>
-      <div className="mt-8">
-        <BookOnVallyButton placement="cta_click_valy_trip_detail">Book on vally</BookOnVallyButton>
-      </div>
-    </section>
+    <>
+      <section className="section-wrap">
+        <p className="eyebrow mb-2">FAQ</p>
+        <h1>Frequently Asked Questions</h1>
+        <p className="mt-4 max-w-3xl text-base" style={{ color: "var(--text-secondary)" }}>
+          Quick answers to help you prepare for your trip, understand our policies, and remove any
+          booking friction.
+        </p>
+      </section>
+
+      <section style={{ backgroundColor: "var(--bg-warm)" }}>
+        <div className="section-wrap-sm">
+          {categories.map((cat) => {
+            const catFaqs = faqs.filter((f) => f.category === cat.key);
+            if (catFaqs.length === 0) return null;
+            return (
+              <div key={cat.key} className="mb-10">
+                <h2 className="mb-4 text-xl">{cat.label}</h2>
+                <FAQAccordion items={catFaqs} />
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="section-wrap text-center">
+        <h2>Still have questions?</h2>
+        <p className="mx-auto mt-3 max-w-xl text-base" style={{ color: "var(--text-secondary)" }}>
+          Give us a call at <a href="tel:2086995636" className="font-medium" style={{ color: "var(--accent)" }}>(208) 699-5636</a> or
+          send us a message — we&apos;re happy to help.
+        </p>
+        <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
+          <BookNowButton placement="cta_click_trip_detail">Book Your Trip</BookNowButton>
+          <Link href="/contact" className="btn-secondary">Contact Us</Link>
+        </div>
+      </section>
+    </>
   );
 }

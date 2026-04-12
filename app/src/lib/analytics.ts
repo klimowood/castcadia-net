@@ -1,13 +1,16 @@
 export type AnalyticsEventName =
-  | "cta_click_valy_header"
-  | "cta_click_valy_hero"
-  | "cta_click_valy_trip_card"
-  | "cta_click_valy_trip_detail"
-  | "cta_click_valy_sticky_mobile"
+  | "cta_click_header"
+  | "cta_click_hero"
+  | "cta_click_trip_card"
+  | "cta_click_trip_detail"
+  | "cta_click_sticky_mobile"
+  | "cta_click_footer"
+  | "cta_click_final"
   | "view_trip_detail"
-  | "start_prebook_bridge"
-  | "complete_redirect_to_valy"
-  | "faq_expand";
+  | "complete_redirect_to_booking"
+  | "faq_expand"
+  | "contact_form_submit"
+  | "email_capture";
 
 export type AnalyticsPayload = Record<string, string | number | boolean | undefined>;
 

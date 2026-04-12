@@ -1,22 +1,30 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Inter } from "next/font/google";
+import { Fraunces, DM_Sans } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { StickyMobileCTA } from "@/components/StickyMobileCTA";
 
-const displayFont = Playfair_Display({ subsets: ["latin"], variable: "--font-display" });
-const bodyFont = Inter({ subsets: ["latin"], variable: "--font-body" });
+const headingFont = Fraunces({ subsets: ["latin"], variable: "--font-heading", weight: ["400", "600", "700", "900"], style: ["normal", "italic"] });
+const bodyFont = DM_Sans({ subsets: ["latin"], variable: "--font-body", weight: ["400", "500", "600", "700"] });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://castcadia.net"),
-  title: "Guided Fishing Charters Coeur d'Alene | Castcadia",
+  title: {
+    default: "Guided Fishing Charters Coeur d'Alene | Castcadia Outfitters",
+    template: "%s | Castcadia Outfitters",
+  },
   description:
-    "Book premium guided fishing charters in Coeur d'Alene and the Pacific Northwest. Reserve your trip through vally.",
+    "Premium guided fishing charters in Coeur d'Alene and the Pacific Northwest. Target bass, pike, salmon, and steelhead with expert local guides. Book your trip today.",
   openGraph: {
-    title: "Castcadia Guided Fishing",
-    description: "Premium guided fishing charters with trusted local expertise.",
+    title: "Castcadia Outfitters — Guided Fishing Charters",
+    description: "Premium guided fishing charters in Coeur d'Alene and the Pacific Northwest.",
     type: "website",
+    siteName: "Castcadia Outfitters",
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 
@@ -27,9 +35,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${displayFont.variable} ${bodyFont.variable} bg-[#0f2320] font-sans text-[#ecf4f2] antialiased`}>
+      <body className={`${headingFont.variable} ${bodyFont.variable} font-sans antialiased`}>
         <SiteHeader />
-        <main className="pb-24 md:pb-0">{children}</main>
+        <main className="pb-20 md:pb-0">{children}</main>
         <SiteFooter />
         <StickyMobileCTA />
       </body>

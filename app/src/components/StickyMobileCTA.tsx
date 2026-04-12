@@ -1,17 +1,24 @@
-import { BookOnVallyButton } from "./BookOnVallyButton";
+import { BookNowButton } from "./BookNowButton";
 
-type Props = {
-  priceFrom?: number;
-};
-
-export function StickyMobileCTA({ priceFrom = 425 }: Props) {
+export function StickyMobileCTA() {
   return (
-    <div className="fixed inset-x-0 bottom-0 z-50 border-t border-white/10 bg-[#0d1f1b]/95 p-3 md:hidden">
+    <div
+      className="fixed inset-x-0 bottom-0 z-50 border-t p-3 md:hidden"
+      style={{
+        borderColor: "var(--border)",
+        backgroundColor: "rgba(255,255,255,0.95)",
+        backdropFilter: "blur(8px)",
+      }}
+    >
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-3">
-        <p className="text-sm text-[#c7d7d3]">
-          From <span className="font-semibold text-white">${priceFrom}</span>
-        </p>
-        <BookOnVallyButton placement="cta_click_valy_sticky_mobile" className="btn-primary flex-1 text-center" />
+        <div>
+          <p className="text-xs font-medium" style={{ color: "var(--text-muted)" }}>Guided trips from</p>
+          <p className="text-base font-bold" style={{ color: "var(--text-primary)" }}>$285<span className="text-sm font-normal" style={{ color: "var(--text-muted)" }}>/person</span></p>
+        </div>
+        <BookNowButton
+          placement="cta_click_sticky_mobile"
+          className="btn-primary flex-1 text-center"
+        />
       </div>
     </div>
   );

@@ -39,3 +39,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Source asset folders (originals — processed copies live in public/)
+/Pictures
+/logos
+/videos
+
+# Environment
+.env.local
+.env*.local
