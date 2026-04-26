@@ -23,11 +23,18 @@ export function ReviewCard({ review }: { review: Review }) {
         <p className="text-sm font-medium" style={{ color: "var(--text-primary)" }}>
           — {review.author}
         </p>
-        {review.tripType && (
-          <span className="text-xs" style={{ color: "var(--text-light)" }}>
-            {review.tripType}
-          </span>
-        )}
+        <div className="flex items-center gap-2">
+          {review.tripType && (
+            <span className="text-xs" style={{ color: "var(--text-light)" }}>
+              {review.tripType}
+            </span>
+          )}
+          {review.date && (
+            <span className="text-xs" style={{ color: "var(--text-light)" }}>
+              {new Date(review.date).toLocaleDateString("en-US", { month: "short", year: "numeric" })}
+            </span>
+          )}
+        </div>
       </div>
     </article>
   );

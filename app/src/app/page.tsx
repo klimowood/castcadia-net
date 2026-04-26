@@ -3,12 +3,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { BookNowButton } from "@/components/BookNowButton";
 import { TripCard } from "@/components/TripCard";
-import { RandomReviews } from "@/components/RandomReviews";
+import { ReviewCard } from "@/components/ReviewCard";
 import { FAQAccordion } from "@/components/FAQAccordion";
 import { EmailCapture } from "@/components/EmailCapture";
-import { getFeaturedTrips, getFeaturedReviews, getFaqs } from "@/lib/data";
-import { fetchGoogleReviews } from "@/lib/google-places";
-import { Review } from "@/types/content";
+import { getFeaturedTrips, getReviews, getFaqs } from "@/lib/data";
 
 export const revalidate = 60; // ISR: refresh from DB every 60s
 
@@ -23,11 +21,10 @@ export default async function Home() {
   const allFaqs = await getFaqs();
   const previewFaqs = allFaqs.slice(0, 4);
 
-  const googleData = await fetchGoogleReviews();
-  const dbReviews = await getFeaturedReviews();
-  const allReviews: Review[] = googleData
-    ? googleData.reviews
-    : dbReviews;
+  const allReviews = await getReviews();
+  // Pick 3 random reviews for the homepage
+  const shuffled = [...allReviews].sort(() => Math.random() - 0.5);
+  const homeReviews = shuffled.slice(0, 3);
 
   return (
     <>
@@ -153,7 +150,9 @@ export default async function Home() {
             </p>
           </div>
           <div className="grid gap-5 md:grid-cols-3">
-            <RandomReviews reviews={allReviews} count={3} />
+            {homeReviews.map((review) => (
+              <ReviewCard key={review.id} review={review} />
+            ))}
           </div>
           <div className="mt-8 text-center">
             <Link href="/reviews" className="btn-secondary">
