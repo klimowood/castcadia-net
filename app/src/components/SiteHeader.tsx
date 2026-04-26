@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { BookNowButton } from "./BookNowButton";
+import { siteConfig } from "@/content/config";
 
 const navItems = [
   { href: "/trips", label: "Trips" },
@@ -254,8 +255,8 @@ export function SiteHeader() {
             </div>
 
             <div className="mt-auto pt-8 text-sm" style={{ color: "var(--text-muted)" }}>
-              <p>(208) 699-5636</p>
-              <p>info@castcadia.net</p>
+              <p>{siteConfig.phone}</p>
+              <p>{siteConfig.email}</p>
             </div>
           </div>
         </div>

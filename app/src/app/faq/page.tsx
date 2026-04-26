@@ -53,7 +53,7 @@ export default function FAQPage() {
           send us a message — we&apos;re happy to help.
         </p>
         <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
-          <BookNowButton placement="cta_click_trip_detail">Book Your Trip</BookNowButton>
+          <BookNowButton placement="cta_click_final">Book Your Trip</BookNowButton>
           <Link href="/contact" className="btn-secondary">Contact Us</Link>
         </div>
       </section>

@@ -24,14 +24,7 @@ export function TripCard({ trip }: { trip: Trip }) {
           className="h-full w-full object-cover object-top transition-transform duration-300 hover:scale-105"
         />
         {trip.catchAndRelease && (
-          <span className="badge-teal absolute right-3 top-3 text-[10px]" style={{
-            backgroundColor: "var(--teal-light)",
-            color: "var(--teal)",
-            borderRadius: "var(--radius-sm)",
-            padding: "4px 8px",
-            fontSize: "10px",
-            fontWeight: 600,
-          }}>
+          <span className="badge badge-teal absolute right-3 top-3 text-[10px]">
             Catch &amp; Release
           </span>
         )}

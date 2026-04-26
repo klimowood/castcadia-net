@@ -63,7 +63,7 @@ export default async function ReviewsPage() {
                 {/* CTA after every 4 reviews */}
                 {(index + 1) % 4 === 0 && index < allReviews.length - 1 && (
                   <div className="mt-5 text-center">
-                    <BookNowButton placement="cta_click_trip_detail" className="btn-primary text-sm">
+                    <BookNowButton placement="cta_click_final" className="btn-primary text-sm">
                       Book Your Trip
                     </BookNowButton>
                   </div>
@@ -108,7 +108,7 @@ export default async function ReviewsPage() {
             Join the growing list of happy Castcadia guests.
           </p>
           <div className="mt-6">
-            <BookNowButton placement="cta_click_trip_detail">Book Your Trip</BookNowButton>
+            <BookNowButton placement="cta_click_final">Book Your Trip</BookNowButton>
           </div>
         </div>
       </section>

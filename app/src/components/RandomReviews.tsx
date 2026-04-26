@@ -1,6 +1,3 @@
-"use client";
-
-import { useMemo } from "react";
 import { Review } from "@/types/content";
 import { ReviewCard } from "./ReviewCard";
 
@@ -14,7 +11,7 @@ function shuffle<T>(arr: T[]): T[] {
 }
 
 export function RandomReviews({ reviews, count = 3 }: { reviews: Review[]; count?: number }) {
-  const picked = useMemo(() => shuffle(reviews).slice(0, count), [reviews, count]);
+  const picked = shuffle(reviews).slice(0, count);
   return (
     <>
       {picked.map((review) => (

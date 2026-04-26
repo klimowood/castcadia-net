@@ -56,5 +56,3 @@ export const reviews: Review[] = [
     isFeatured: false,
   },
 ];
-
-export const featuredReviews = reviews.filter((r) => r.isFeatured);

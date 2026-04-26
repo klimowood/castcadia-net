@@ -5,8 +5,8 @@
 import { createClient } from "@sanity/client";
 
 const client = createClient({
-  projectId: "hflxk54s",
-  dataset: "production",
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "hflxk54s",
+  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || "production",
   apiVersion: "2024-01-01",
   token: process.env.SANITY_WRITE_TOKEN,
   useCdn: false,

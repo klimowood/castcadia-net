@@ -62,7 +62,7 @@ export default function PartnersPage() {
           accommodations. We&apos;re happy to help coordinate.
         </p>
         <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
-          <BookNowButton placement="cta_click_trip_detail">Book Your Trip</BookNowButton>
+          <BookNowButton placement="cta_click_final">Book Your Trip</BookNowButton>
           <a href="/contact" className="btn-secondary">
             Contact Us
           </a>

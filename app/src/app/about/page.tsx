@@ -139,7 +139,7 @@ export default function AboutPage() {
             This isn&apos;t just a fishing trip — it&apos;s an experience you&apos;ll talk about for years.
           </p>
           <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
-            <BookNowButton placement="cta_click_trip_detail">Book Your Trip</BookNowButton>
+            <BookNowButton placement="cta_click_final">Book Your Trip</BookNowButton>
             <Link href="/trips" className="btn-secondary">View Trip Options</Link>
           </div>
         </div>

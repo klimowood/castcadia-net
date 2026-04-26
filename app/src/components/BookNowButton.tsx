@@ -23,7 +23,6 @@ export function BookNowButton({
       href={href}
       className={className ?? "btn-primary"}
       onClick={() => {
-        trackEvent(placement, { tripSlug, href });
         trackEvent("complete_redirect_to_booking", { tripSlug, href, placement });
       }}
     >
