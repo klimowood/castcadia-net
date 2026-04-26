@@ -61,6 +61,23 @@ export type FAQ = {
   order: number;
 };
 
+export type Species = {
+  id: string;
+  slug: string;
+  name: string;
+  tagline: string;
+  description: string;
+  details: string; // second paragraph — habitat, behavior, why they're prized
+  techniques: string[];
+  locations: string[];
+  seasonLabel: string;
+  seasonMonths: number[];
+  averageWeight?: string;
+  recordWeight?: string;
+  imageUrl: string;
+  relatedTripSlugs: string[];
+};
+
 export type SiteConfig = {
   phone: string;
   email: string;

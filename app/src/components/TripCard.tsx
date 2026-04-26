@@ -15,13 +15,13 @@ export function TripCard({ trip }: { trip: Trip }) {
 
   return (
     <article className="card overflow-hidden flex flex-col">
-      <div className="relative h-48 overflow-hidden">
+      <div className="relative h-60 overflow-hidden">
         <Image
           src={trip.imageUrl}
           alt={trip.title}
           width={1200}
           height={800}
-          className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
+          className="h-full w-full object-cover object-top transition-transform duration-300 hover:scale-105"
         />
         {trip.catchAndRelease && (
           <span className="badge-teal absolute right-3 top-3 text-[10px]" style={{

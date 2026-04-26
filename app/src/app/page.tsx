@@ -3,12 +3,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { BookNowButton } from "@/components/BookNowButton";
 import { TripCard } from "@/components/TripCard";
-import { ReviewCard } from "@/components/ReviewCard";
+import { RandomReviews } from "@/components/RandomReviews";
 import { FAQAccordion } from "@/components/FAQAccordion";
 import { EmailCapture } from "@/components/EmailCapture";
 import { trips } from "@/content/trips";
-import { featuredReviews } from "@/content/testimonials";
+import { reviews as localReviews } from "@/content/testimonials";
 import { faqs } from "@/content/faqs";
+import { fetchGoogleReviews } from "@/lib/google-places";
+import { Review } from "@/types/content";
 
 export const metadata: Metadata = {
   title: "Premium Guided Fishing in Coeur d'Alene & the Pacific Northwest",
@@ -16,10 +18,14 @@ export const metadata: Metadata = {
     "Catch more, stress less with premium guided fishing charters. Target bass, pike, salmon, and steelhead with Castcadia Outfitters. Book your trip today.",
 };
 
-export default function Home() {
+export default async function Home() {
   const featuredTrips = trips.filter((t) => t.isFeatured);
   const previewFaqs = faqs.slice(0, 4);
-  const previewReviews = featuredReviews.slice(0, 3);
+
+  const googleData = await fetchGoogleReviews();
+  const allReviews: Review[] = googleData
+    ? googleData.reviews
+    : localReviews.filter((r) => r.isFeatured);
 
   return (
     <>
@@ -149,9 +155,7 @@ export default function Home() {
             </p>
           </div>
           <div className="grid gap-5 md:grid-cols-3">
-            {previewReviews.map((review) => (
-              <ReviewCard key={review.id} review={review} />
-            ))}
+            <RandomReviews reviews={allReviews} count={3} />
           </div>
           <div className="mt-8 text-center">
             <Link href="/reviews" className="btn-secondary">

@@ -9,12 +9,21 @@ const navItems = [
   { href: "/trips", label: "Trips" },
   { href: "/about", label: "About" },
   { href: "/reviews", label: "Reviews" },
+  { href: "/partners", label: "Partners" },
   { href: "/faq", label: "FAQ" },
   { href: "/contact", label: "Contact" },
 ];
 
+const fishItems = [
+  { href: "/fish/bass", label: "Bass & Pike" },
+  { href: "/fish/steelhead", label: "Steelhead" },
+  { href: "/fish/salmon", label: "Salmon" },
+];
+
 export function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [fishOpen, setFishOpen] = useState(false);
+  const [fishMobileOpen, setFishMobileOpen] = useState(false);
 
   return (
     <>
@@ -40,7 +49,76 @@ export function SiteHeader() {
 
           {/* Desktop nav */}
           <nav className="hidden items-center gap-6 text-sm font-medium md:flex" style={{ color: "var(--text-secondary)" }}>
-            {navItems.map((item) => (
+            <Link href="/trips" className="transition-colors duration-200 hover:text-[var(--accent)]">
+              Trips
+            </Link>
+
+            {/* Fish dropdown */}
+            <div
+              className="relative"
+              onMouseEnter={() => setFishOpen(true)}
+              onMouseLeave={() => setFishOpen(false)}
+            >
+              <button
+                className="flex items-center gap-1 transition-colors duration-200 hover:text-[var(--accent)]"
+                style={{ color: fishOpen ? "var(--accent)" : undefined }}
+                aria-expanded={fishOpen}
+                aria-haspopup="true"
+              >
+                Fish
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 14 14"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="transition-transform duration-200"
+                  style={{ transform: fishOpen ? "rotate(180deg)" : "rotate(0deg)" }}
+                >
+                  <polyline points="2 5 7 10 12 5" />
+                </svg>
+              </button>
+
+              {fishOpen && (
+                <div
+                  className="absolute left-1/2 top-full pt-2"
+                  style={{ transform: "translateX(-50%)", minWidth: "180px" }}
+                >
+                  <div
+                    className="rounded-xl border py-1.5 shadow-lg"
+                    style={{
+                      backgroundColor: "var(--bg-card)",
+                      borderColor: "var(--border-light)",
+                      boxShadow: "var(--shadow-lg)",
+                    }}
+                  >
+                    {fishItems.map((item) => (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        className="block px-4 py-2.5 text-sm font-medium transition-colors hover:text-[var(--accent)]"
+                        style={{ color: "var(--text-secondary)" }}
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+                    <div style={{ borderTop: "1px solid var(--border-light)", margin: "4px 0" }} />
+                    <Link
+                      href="/fish"
+                      className="block px-4 py-2.5 text-xs font-medium transition-colors hover:text-[var(--accent)]"
+                      style={{ color: "var(--text-muted)" }}
+                    >
+                      View all species →
+                    </Link>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {navItems.slice(1).map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
@@ -100,7 +178,65 @@ export function SiteHeader() {
             </div>
 
             <nav className="flex flex-col gap-1">
-              {navItems.map((item) => (
+              <Link
+                href="/trips"
+                className="rounded-lg px-3 py-3 text-base font-medium transition-colors"
+                style={{ color: "var(--text-secondary)" }}
+                onClick={() => setMenuOpen(false)}
+              >
+                Trips
+              </Link>
+
+              {/* Fish expandable section */}
+              <div>
+                <button
+                  className="flex w-full items-center justify-between rounded-lg px-3 py-3 text-base font-medium transition-colors"
+                  style={{ color: "var(--text-secondary)" }}
+                  onClick={() => setFishMobileOpen((v) => !v)}
+                >
+                  Fish
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="transition-transform duration-200"
+                    style={{ transform: fishMobileOpen ? "rotate(180deg)" : "rotate(0deg)" }}
+                  >
+                    <polyline points="3 6 8 11 13 6" />
+                  </svg>
+                </button>
+
+                {fishMobileOpen && (
+                  <div className="ml-3 flex flex-col gap-0.5 pb-1">
+                    {fishItems.map((item) => (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        className="rounded-lg px-3 py-2.5 text-sm font-medium transition-colors"
+                        style={{ color: "var(--text-muted)" }}
+                        onClick={() => setMenuOpen(false)}
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+                    <Link
+                      href="/fish"
+                      className="rounded-lg px-3 py-2.5 text-xs font-medium transition-colors"
+                      style={{ color: "var(--text-light)" }}
+                      onClick={() => setMenuOpen(false)}
+                    >
+                      View all species →
+                    </Link>
+                  </div>
+                )}
+              </div>
+
+              {navItems.slice(1).map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}

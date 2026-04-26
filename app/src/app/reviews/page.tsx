@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { ReviewCard } from "@/components/ReviewCard";
 import { BookNowButton } from "@/components/BookNowButton";
-import { reviews } from "@/content/testimonials";
+import { reviews as localReviews } from "@/content/testimonials";
+import { fetchGoogleReviews } from "@/lib/google-places";
+import { Review } from "@/types/content";
+
+export const revalidate = 86400; // revalidate once per day
 
 export const metadata: Metadata = {
   title: "Reviews",
@@ -10,8 +13,21 @@ export const metadata: Metadata = {
     "Read real guest reviews from guided fishing charters with Castcadia Outfitters in Coeur d'Alene and the Pacific Northwest.",
 };
 
-export default function ReviewsPage() {
-  const avgRating = (reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1);
+export default async function ReviewsPage() {
+  const googleData = await fetchGoogleReviews();
+
+  const allReviews: Review[] = googleData ? googleData.reviews : localReviews;
+
+  // Aggregate stats: prefer live Google numbers, fall back to local average.
+  const aggregateRating =
+    googleData?.rating?.toFixed(1) ??
+    (localReviews.reduce((sum, r) => sum + r.rating, 0) / localReviews.length).toFixed(1);
+
+  const reviewCountLabel = googleData?.totalCount
+    ? `${googleData.totalCount}+ reviews`
+    : `${localReviews.length} reviews`;
+
+  const sourcesLabel = "Google";
 
   return (
     <>
@@ -25,11 +41,13 @@ export default function ReviewsPage() {
 
         {/* Aggregate Rating */}
         <div className="card mt-8 inline-flex items-center gap-4 px-6 py-4">
-          <span className="text-4xl font-bold" style={{ color: "var(--accent)" }}>{avgRating}</span>
+          <span className="text-4xl font-bold" style={{ color: "var(--accent)" }}>
+            {aggregateRating}
+          </span>
           <div>
             <p className="stars text-lg">★★★★★</p>
             <p className="text-sm" style={{ color: "var(--text-muted)" }}>
-              {reviews.length} reviews &bull; Google &bull; FishingBooker
+              {reviewCountLabel} &bull; {sourcesLabel}
             </p>
           </div>
         </div>
@@ -39,11 +57,11 @@ export default function ReviewsPage() {
       <section style={{ backgroundColor: "var(--bg-warm)" }}>
         <div className="section-wrap">
           <div className="grid gap-5 md:grid-cols-2">
-            {reviews.map((review, index) => (
+            {allReviews.map((review, index) => (
               <div key={review.id}>
                 <ReviewCard review={review} />
                 {/* CTA after every 4 reviews */}
-                {(index + 1) % 4 === 0 && index < reviews.length - 1 && (
+                {(index + 1) % 4 === 0 && index < allReviews.length - 1 && (
                   <div className="mt-5 text-center">
                     <BookNowButton placement="cta_click_trip_detail" className="btn-primary text-sm">
                       Book Your Trip

@@ -45,7 +45,7 @@ export default function AboutPage() {
                 src="/photos/about-release.jpg"
                 alt="Guide releasing a salmon on the Columbia River"
                 fill
-                className="object-cover"
+                className="object-cover object-top"
               />
             </div>
           </div>
@@ -87,7 +87,7 @@ export default function AboutPage() {
                 src={primaryGuide.imageUrl}
                 alt={primaryGuide.name}
                 fill
-                className="object-cover"
+                className="object-cover object-top"
               />
             </div>
             <div>
