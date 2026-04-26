@@ -1,9 +1,12 @@
-import { supabase } from "./supabase";
+import { getSupabaseClient } from "./supabase";
 import type { Trip, Review, FAQ, Guide, SiteConfig } from "@/types/content";
 
 // ── Trips ──────────────────────────────────────
 
 export async function getTrips(): Promise<Trip[]> {
+  const supabase = getSupabaseClient();
+  if (!supabase) return [];
+
   const { data, error } = await supabase
     .from("trips")
     .select("*")
@@ -48,6 +51,9 @@ export async function getFeaturedTrips(): Promise<Trip[]> {
 // ── Reviews ────────────────────────────────────
 
 export async function getReviews(): Promise<Review[]> {
+  const supabase = getSupabaseClient();
+  if (!supabase) return [];
+
   const { data, error } = await supabase
     .from("reviews")
     .select("*")
@@ -75,6 +81,9 @@ export async function getFeaturedReviews(): Promise<Review[]> {
 // ── FAQs ───────────────────────────────────────
 
 export async function getFaqs(): Promise<FAQ[]> {
+  const supabase = getSupabaseClient();
+  if (!supabase) return [];
+
   const { data, error } = await supabase
     .from("faqs")
     .select("*")
@@ -106,6 +115,9 @@ function mapGuide(data: Record<string, unknown>): Guide {
 }
 
 export async function getGuides(): Promise<Guide[]> {
+  const supabase = getSupabaseClient();
+  if (!supabase) return [];
+
   const { data, error } = await supabase
     .from("guides")
     .select("*")
@@ -116,6 +128,9 @@ export async function getGuides(): Promise<Guide[]> {
 }
 
 export async function getPrimaryGuide(): Promise<Guide | null> {
+  const supabase = getSupabaseClient();
+  if (!supabase) return null;
+
   const { data, error } = await supabase
     .from("guides")
     .select("*")
@@ -130,6 +145,17 @@ export async function getPrimaryGuide(): Promise<Guide | null> {
 // ── Site Settings ──────────────────────────────
 
 export async function getSiteConfig(): Promise<SiteConfig> {
+  const supabase = getSupabaseClient();
+  if (!supabase) {
+    return {
+      phone: "(208) 699-5636",
+      email: "info@castcadia.net",
+      instagram: "https://www.instagram.com/castcadia_guide/",
+      facebook: "https://www.facebook.com/profile.php?id=100091227791429",
+      bookingUrl: "https://book.vallypro.com/p/castcadia-outfitters",
+    };
+  }
+
   const { data, error } = await supabase
     .from("site_settings")
     .select("*")
