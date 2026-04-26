@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import { ReviewCard } from "@/components/ReviewCard";
 import { BookNowButton } from "@/components/BookNowButton";
-import { reviews as localReviews } from "@/content/testimonials";
+import { getReviews } from "@/lib/data";
 import { fetchGoogleReviews } from "@/lib/google-places";
 import { Review } from "@/types/content";
 
-export const revalidate = 86400; // revalidate once per day
+export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: "Reviews",
@@ -15,17 +15,19 @@ export const metadata: Metadata = {
 
 export default async function ReviewsPage() {
   const googleData = await fetchGoogleReviews();
+  const dbReviews = await getReviews();
 
-  const allReviews: Review[] = googleData ? googleData.reviews : localReviews;
+  const allReviews: Review[] = googleData ? googleData.reviews : dbReviews;
 
-  // Aggregate stats: prefer live Google numbers, fall back to local average.
   const aggregateRating =
     googleData?.rating?.toFixed(1) ??
-    (localReviews.reduce((sum, r) => sum + r.rating, 0) / localReviews.length).toFixed(1);
+    (dbReviews.length > 0
+      ? (dbReviews.reduce((sum, r) => sum + r.rating, 0) / dbReviews.length).toFixed(1)
+      : "5.0");
 
   const reviewCountLabel = googleData?.totalCount
     ? `${googleData.totalCount}+ reviews`
-    : `${localReviews.length} reviews`;
+    : `${dbReviews.length} reviews`;
 
   const sourcesLabel = "Google";
 
@@ -78,7 +80,7 @@ export default async function ReviewsPage() {
       <section className="section-wrap text-center">
         <h2>See more reviews</h2>
         <p className="mx-auto mt-3 max-w-2xl text-sm" style={{ color: "var(--text-secondary)" }}>
-          Read our reviews on Google and FishingBooker, or leave your own after your trip.
+          Read our reviews on Google, or leave your own after your trip.
         </p>
         <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
           <a
@@ -88,14 +90,6 @@ export default async function ReviewsPage() {
             className="btn-secondary"
           >
             Google Reviews
-          </a>
-          <a
-            href="https://www.fishingbooker.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-secondary"
-          >
-            FishingBooker
           </a>
         </div>
       </section>

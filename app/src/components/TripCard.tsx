@@ -15,14 +15,21 @@ export function TripCard({ trip }: { trip: Trip }) {
 
   return (
     <article className="card overflow-hidden flex flex-col">
-      <div className="relative h-60 overflow-hidden">
-        <Image
-          src={trip.imageUrl}
-          alt={trip.title}
-          width={1200}
-          height={800}
-          className="h-full w-full object-cover object-top transition-transform duration-300 hover:scale-105"
-        />
+      <div className="relative h-80 overflow-hidden">
+        {trip.imageUrl ? (
+          <Image
+            src={trip.imageUrl}
+            alt={trip.title}
+            width={1200}
+            height={800}
+            className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
+            style={{ objectPosition: trip.slug.includes("bass") ? "center 40%" : "center" }}
+          />
+        ) : (
+          <div className="flex h-full w-full items-center justify-center" style={{ background: "linear-gradient(135deg, #2A7B6F 0%, #1a4a3f 100%)" }}>
+            <span className="text-5xl opacity-50">🎣</span>
+          </div>
+        )}
         {trip.catchAndRelease && (
           <span className="badge badge-teal absolute right-3 top-3 text-[10px]">
             Catch &amp; Release

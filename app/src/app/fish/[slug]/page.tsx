@@ -5,7 +5,9 @@ import { notFound } from "next/navigation";
 import { BookNowButton } from "@/components/BookNowButton";
 import { TripCard } from "@/components/TripCard";
 import { species, getSpeciesBySlug } from "@/content/species";
-import { trips } from "@/content/trips";
+import { getTrips } from "@/lib/data";
+
+export const revalidate = 60;
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -28,6 +30,7 @@ export default async function SpeciesPage({ params }: Props) {
   const s = getSpeciesBySlug(slug);
   if (!s) notFound();
 
+  const trips = await getTrips();
   const relatedTrips = trips.filter((t) => s.relatedTripSlugs.includes(t.slug));
   const MONTH_NAMES = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 

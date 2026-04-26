@@ -1,0 +1,15 @@
+{
+  "verdict": "FAIL",
+  "severity": "medium",
+  "required_fixes": [
+    "[high] Wire trip-specific Vally routing correctly: use authoritative booking path/id (e.g., vallyBookingPath) in CTA URL generation instead of ignoring it.",
+    "[medium] Harden Vally URL builder against malformed NEXT_PUBLIC_VALLY_URL (try/catch + fallback to default URL).",
+    "[low] Normalize analytics event naming (valy vs vally, booking_start vs complete_redirect) to a single schema.",
+    "[low] Add distinct footer CTA placement event instead of reusing header placement label."
+  ],
+  "notes": [
+    "Build and lint pass in app/.",
+    "All required MVP routes render and primary CTA surfaces are present.",
+    "No obvious P0/P1 security issues detected in reviewed code."
+  ]
+}

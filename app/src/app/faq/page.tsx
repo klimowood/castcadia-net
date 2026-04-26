@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { FAQAccordion } from "@/components/FAQAccordion";
 import { BookNowButton } from "@/components/BookNowButton";
-import { faqs } from "@/content/faqs";
+import { getFaqs } from "@/lib/data";
+
+export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: "FAQ",
@@ -10,7 +12,8 @@ export const metadata: Metadata = {
     "Answers about booking, weather, preparation, cancellation policies, and what to expect on your guided fishing trip with Castcadia Outfitters.",
 };
 
-export default function FAQPage() {
+export default async function FAQPage() {
+  const faqs = await getFaqs();
   const categories = [
     { key: "booking", label: "Booking" },
     { key: "preparation", label: "Preparation" },

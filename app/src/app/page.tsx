@@ -6,11 +6,11 @@ import { TripCard } from "@/components/TripCard";
 import { RandomReviews } from "@/components/RandomReviews";
 import { FAQAccordion } from "@/components/FAQAccordion";
 import { EmailCapture } from "@/components/EmailCapture";
-import { trips } from "@/content/trips";
-import { reviews as localReviews } from "@/content/testimonials";
-import { faqs } from "@/content/faqs";
+import { getFeaturedTrips, getFeaturedReviews, getFaqs } from "@/lib/data";
 import { fetchGoogleReviews } from "@/lib/google-places";
 import { Review } from "@/types/content";
+
+export const revalidate = 60; // ISR: refresh from DB every 60s
 
 export const metadata: Metadata = {
   title: "Premium Guided Fishing in Coeur d'Alene & the Pacific Northwest",
@@ -19,13 +19,15 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-  const featuredTrips = trips.filter((t) => t.isFeatured);
-  const previewFaqs = faqs.slice(0, 4);
+  const featuredTrips = await getFeaturedTrips();
+  const allFaqs = await getFaqs();
+  const previewFaqs = allFaqs.slice(0, 4);
 
   const googleData = await fetchGoogleReviews();
+  const dbReviews = await getFeaturedReviews();
   const allReviews: Review[] = googleData
     ? googleData.reviews
-    : localReviews.filter((r) => r.isFeatured);
+    : dbReviews;
 
   return (
     <>
@@ -72,10 +74,6 @@ export default async function Home() {
                 </Link>
               </div>
               <div className="mt-8 flex flex-wrap gap-4 text-sm animate-fade-up delay-400" style={{ color: "rgba(255,255,255,0.5)" }}>
-                <span className="flex items-center gap-1.5">
-                  <span className="stars">★</span> 5.0 rated on FishingBooker
-                </span>
-                <span>•</span>
                 <span>Licensed &amp; insured</span>
                 <span>•</span>
                 <span>Conservation-driven</span>

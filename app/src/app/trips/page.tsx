@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { BookNowButton } from "@/components/BookNowButton";
 import { TripCard } from "@/components/TripCard";
-import { trips } from "@/content/trips";
+import { getTrips } from "@/lib/data";
+
+export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: "Trips & Rates",
@@ -9,7 +11,8 @@ export const metadata: Metadata = {
     "Compare guided fishing trip options in Coeur d'Alene, Clearwater, and the Columbia River. Bass, pike, steelhead, and salmon trips with transparent pricing.",
 };
 
-export default function TripsPage() {
+export default async function TripsPage() {
+  const trips = await getTrips();
   const bassTrips = trips.filter((t) => t.species.some((s) => s.includes("Bass")));
   const otherTrips = trips.filter((t) => !t.species.some((s) => s.includes("Bass")));
 

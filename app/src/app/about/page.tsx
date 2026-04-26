@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { BookNowButton } from "@/components/BookNowButton";
-import { primaryGuide } from "@/content/guide";
 
 export const metadata: Metadata = {
   title: "About",
@@ -78,36 +77,16 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Guide Bio */}
+      {/* Meet the Guides CTA */}
       <section style={{ backgroundColor: "var(--bg-warm)" }}>
-        <div className="section-wrap">
-          <div className="grid items-center gap-10 md:grid-cols-2">
-            <div className="relative aspect-square overflow-hidden md:aspect-[3/4]" style={{ borderRadius: "var(--radius-lg)" }}>
-              <Image
-                src={primaryGuide.imageUrl}
-                alt={primaryGuide.name}
-                fill
-                className="object-cover object-top"
-              />
-            </div>
-            <div>
-              <p className="eyebrow mb-2">Your Guide</p>
-              <h2>{primaryGuide.name}</h2>
-              <p className="mt-1 text-base font-medium" style={{ color: "var(--accent)" }}>
-                {primaryGuide.title}
-              </p>
-              <p className="mt-4 text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-                {primaryGuide.bio}
-              </p>
-              <ul className="mt-5 space-y-2">
-                {primaryGuide.credentials.map((c) => (
-                  <li key={c} className="flex items-start gap-2 text-sm" style={{ color: "var(--text-secondary)" }}>
-                    <span style={{ color: "var(--teal)" }}>✓</span>
-                    {c}
-                  </li>
-                ))}
-              </ul>
-            </div>
+        <div className="section-wrap text-center">
+          <p className="eyebrow mb-2">Your Guides</p>
+          <h2>Meet the team behind Castcadia</h2>
+          <p className="mx-auto mt-3 max-w-2xl text-base" style={{ color: "var(--text-secondary)" }}>
+            Every trip is led by an experienced, licensed guide who knows these waters inside and out.
+          </p>
+          <div className="mt-6">
+            <Link href="/about/guides" className="btn-secondary">Meet Our Guides</Link>
           </div>
         </div>
       </section>

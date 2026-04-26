@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 import { siteConfig } from "@/content/config";
 import { BookNowButton } from "./BookNowButton";
 
@@ -18,13 +17,9 @@ export function SiteFooter() {
         <div className="grid gap-8 md:grid-cols-4">
           {/* Brand */}
           <div className="md:col-span-1">
-            <Image
-              src="/logo.png"
-              alt="Castcadia Outfitters"
-              width={56}
-              height={56}
-              className="h-14 w-auto"
-            />
+            <p className="text-lg font-bold" style={{ color: "var(--text-primary)", fontFamily: "var(--font-heading)" }}>
+              CASTCADIA OUTFITTERS
+            </p>
             <p className="mt-2 text-sm" style={{ color: "var(--text-muted)" }}>
               North Idaho-born. Conservation-driven. Adventure-focused.
             </p>

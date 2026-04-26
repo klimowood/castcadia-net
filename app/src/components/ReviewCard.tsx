@@ -2,7 +2,7 @@ import { Review } from "@/types/content";
 
 const sourceLabels: Record<Review["source"], string> = {
   google: "Google",
-  fishingbooker: "FishingBooker",
+  fishingbooker: "Review",
   facebook: "Facebook",
   direct: "Direct",
 };
